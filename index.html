@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirror of Mindfulness - Find Your Reflection</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka', cursive, sans-serif;
+            background-image: url('background.jpeg'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #FFF8DC; 
+            color: #4A1D0D;
+        }
+        .custom-border {
+            border: 4px solid #4A1D0D;
+            box-shadow: 4px 4px 0px #4A1D0D;
+        }
+        .custom-button {
+            border: 3px solid #4A1D0D;
+            box-shadow: 3px 3px 0px #4A1D0D;
+            transition: all 0.1s ease;
+        }
+        .custom-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px #4A1D0D;
+        }
+        .custom-button:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0px #4A1D0D;
+        }
+        .title-main {
+            font-weight: 900;
+            letter-spacing: -0.025em;
+            line-height: 1.05;
+            text-shadow: 2px 2px 0px #FFD8A8;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 md:p-8">
+
+    <!-- Top Navigation / Header with Language Switcher -->
+    <header class="w-full max-w-5xl mx-auto flex justify-between items-center mb-6">
+        <!-- Language Switcher -->
+        <div class="flex items-center gap-1.5 bg-[#FFFDF0] px-3 py-1.5 rounded-xl custom-border">
+            <span class="text-xs font-bold text-amber-900 mr-1">Lang:</span>
+            <button onclick="setLanguage('id')" id="lang-id-btn" class="px-2 py-0.5 text-xs font-bold rounded bg-orange-400 text-white transition">ID</button>
+            <button onclick="setLanguage('en')" id="lang-en-btn" class="px-2 py-0.5 text-xs font-bold rounded bg-amber-100 text-[#4A1D0D] transition">EN</button>
+        </div>
+
+        <div class="flex gap-3">
+            <button onclick="showCardsModal()" id="nav-cards-btn" class="px-4 py-2 bg-amber-100 font-bold text-sm rounded-xl custom-button">Character Cards</button>
+            <button onclick="showAboutModal()" id="nav-about-btn" class="px-4 py-2 bg-orange-100 font-bold text-sm rounded-xl custom-button">About Us</button>
+        </div>
+    </header>
+
+    <!-- Main Container App -->
+    <main class="w-full max-w-5xl mx-auto my-auto flex-grow flex items-center justify-center">
+
+        <!-- VIEW 1: HOME SCREEN -->
+        <div id="home-screen" class="w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center bg-[#FFFDF0] p-6 md:p-12 rounded-3xl custom-border">
+            
+            <!-- Left: Mascot -->
+            <div class="flex justify-center items-center">
+                <img src="mascot-cat.png" alt="Mirror Cat Mascot" class="w-72 h-72 md:w-96 md:h-96 object-contain drop-shadow-lg">
+            </div>
+
+            <!-- Right: Title & Actions -->
+            <div class="text-center md:text-left flex flex-col justify-center">
+                <div class="font-extrabold text-sm md:text-base tracking-wider text-amber-900 opacity-80 mb-1">
+                    mirror of mindfulness
+                </div>
+                <h1 class="text-4xl md:text-6xl title-main text-[#4A1D0D] mb-3">
+                    MIRROR OF <span class="block text-orange-600 mt-1">MINDFULNESS</span>
+                </h1>
+                <p id="home-subtitle" class="text-base md:text-lg font-bold text-amber-900 mb-6 opacity-90">Find out your reflection & connection archetype!</p>
+                
+                <div class="flex flex-col gap-4 mb-6">
+                    <button onclick="startQuiz()" id="home-start-btn" class="w-full py-4 bg-orange-400 hover:bg-orange-500 text-white font-extrabold text-xl rounded-2xl custom-button flex items-center justify-center gap-2">
+                        START / TAKE QUIZ
+                    </button>
+                </div>
+
+                <!-- Email Box -->
+                <div id="home-email-text" class="pt-4 border-t-2 border-orange-200 text-xs font-bold text-amber-900">
+                    Got a question? email us on: <span class="underline text-orange-700">mirrorofmindfulness@gmail.com</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: QUIZ SCREEN -->
+        <div id="quiz-screen" class="hidden w-full bg-[#FFFDF0] p-6 md:p-10 rounded-3xl custom-border">
+            <!-- Quiz Progress Header -->
+            <div class="flex justify-between items-center mb-6">
+                <span id="question-category-badge" class="px-3 py-1 bg-orange-200 text-orange-900 font-bold text-xs rounded-full uppercase tracking-wider custom-button">Skor Idola</span>
+                <span id="question-progress" class="font-bold text-sm text-amber-900">Question 1 of 10</span>
+            </div>
+
+            <!-- Question Card -->
+            <div class="mb-8">
+                <h2 id="question-text" class="text-xl md:text-2xl font-bold text-[#4A1D0D] mb-6 leading-relaxed">
+                    Loading question...
+                </h2>
+
+                <!-- Options List (Likert Scale) -->
+                <div id="options-container" class="flex flex-col gap-3">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between items-center pt-4 border-t-2 border-orange-100">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-6 py-2.5 bg-amber-100 font-bold rounded-xl custom-button text-sm disabled:opacity-40 disabled:cursor-not-allowed">
+                    Back
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2.5 bg-orange-400 text-white font-bold rounded-xl custom-button text-sm disabled:opacity-40 disabled:cursor-not-allowed">
+                    Next
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 3: RESULT SCREEN -->
+        <div id="result-screen" class="hidden w-full bg-[#FFFDF0] p-6 md:p-10 rounded-3xl custom-border text-center">
+            <div id="res-badge-text" class="inline-block px-4 py-1.5 bg-orange-200 font-bold text-xs rounded-full mb-4 custom-button">QUIZ RESULT COMPLETED!</div>
+            <h2 id="res-heading" class="text-3xl font-extrabold text-[#4A1D0D] mb-2">Your Reflection Archetype</h2>
+            <p id="res-subheading" class="text-sm text-amber-900 mb-6">Here is your customized analysis based on your average quiz scores.</p>
+
+            <!-- Result Card Container -->
+            <div id="result-card-box" class="bg-blue-50 border-4 border-[#4A1D0D] rounded-3xl p-6 md:p-8 mb-6 shadow-[4px_4px_0px_#4A1D0D] max-w-xl mx-auto">
+                <div id="result-avatar" class="w-48 h-48 mx-auto mb-4 flex items-center justify-center">
+                    <img id="result-img-tag" src="" alt="Result Card" class="w-full h-full object-contain drop-shadow-md">
+                </div>
+                <h3 id="result-title" class="text-3xl font-black text-[#4A1D0D] tracking-wider uppercase mb-3">TOURIST</h3>
+                
+                <!-- Score Breakdown -->
+                <div class="flex justify-center gap-4 mb-4 font-bold text-sm">
+                    <span id="res-idol-label" class="px-3 py-1 bg-white border-2 border-[#4A1D0D] rounded-xl">Idol Score: <span id="res-idol-score">0.0</span></span>
+                    <span id="res-fandom-label" class="px-3 py-1 bg-white border-2 border-[#4A1D0D] rounded-xl">Fandom Score: <span id="res-fandom-score">0.0</span></span>
+                </div>
+
+                <p id="result-description" class="text-base text-amber-900 leading-relaxed font-medium">
+                    Description goes here...
+                </p>
+            </div>
+
+            <div class="flex justify-center gap-4">
+                <button onclick="startQuiz()" id="res-retake-btn" class="px-6 py-3 bg-amber-100 font-bold rounded-2xl custom-button">Retake Quiz</button>
+                <button onclick="showCardsModal()" id="res-viewcards-btn" class="px-6 py-3 bg-orange-400 text-white font-bold rounded-2xl custom-button">View Character Cards</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- MODAL FOR CHARACTER CARDS DIRECTORY -->
+    <div id="cards-modal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#FFFDF0] w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl custom-border p-6 md:p-8 relative">
+            <div class="flex justify-between items-center mb-6 border-b-2 border-orange-200 pb-4">
+                <h2 id="modal-directory-title" class="text-2xl font-black text-[#4A1D0D]">CHARACTER ARCHETYPES DIRECTORY</h2>
+                <button onclick="closeCardsModal()" class="w-10 h-10 bg-red-100 hover:bg-red-200 rounded-xl font-bold custom-button flex items-center justify-center text-lg">X</button>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+                
+                <!-- Tourist Card -->
+                <div onclick="selectCardDetail('tourist')" class="bg-slate-100 p-4 rounded-2xl custom-border cursor-pointer hover:bg-slate-200 transition text-center flex flex-col items-center">
+                    <div class="w-full h-44 flex items-center justify-center mb-2 overflow-hidden">
+                        <img src="tourist.png" alt="Tourist" class="w-full h-full object-contain drop-shadow">
+                    </div>
+                    <h4 class="font-black text-lg text-[#4A1D0D]">TOURIST</h4>
+                    <p class="text-xs text-amber-900 font-medium mt-1">Idol (<=2.5), Fandom (<=2.5)</p>
+                </div>
+
+                <!-- Mingler Card -->
+                <div onclick="selectCardDetail('mingler')" class="bg-orange-50 p-4 rounded-2xl custom-border cursor-pointer hover:bg-orange-100 transition text-center flex flex-col items-center">
+                    <div class="w-full h-44 flex items-center justify-center mb-2 overflow-hidden">
+                        <img src="mingler.png" alt="Mingler" class="w-full h-full object-contain drop-shadow">
+                    </div>
+                    <h4 class="font-black text-lg text-[#4A1D0D]">MINGLER</h4>
+                    <p class="text-xs text-amber-900 font-medium mt-1">Idol (<=2.5), Fandom (>2.5)</p>
+                </div>
+
+                <!-- Devotee Card -->
+                <div onclick="selectCardDetail('devotee')" class="bg-amber-50 p-4 rounded-2xl custom-border cursor-pointer hover:bg-amber-100 transition text-center flex flex-col items-center">
+                    <div class="w-full h-44 flex items-center justify-center mb-2 overflow-hidden">
+                        <img src="devotee.png" alt="Devotee" class="w-full h-full object-contain drop-shadow">
+                    </div>
+                    <h4 class="font-black text-lg text-[#4A1D0D]">DEVOTEE</h4>
+                    <p class="text-xs text-amber-900 font-medium mt-1">Idol (>2.5), Fandom (<=2.5)</p>
+                </div>
+
+                <!-- Insider Card -->
+                <div onclick="selectCardDetail('insider')" class="bg-yellow-50 p-4 rounded-2xl custom-border cursor-pointer hover:bg-yellow-100 transition text-center flex flex-col items-center">
+                    <div class="w-full h-44 flex items-center justify-center mb-2 overflow-hidden">
+                        <img src="insider.png" alt="Insider" class="w-full h-full object-contain drop-shadow">
+                    </div>
+                    <h4 class="font-black text-lg text-[#4A1D0D]">INSIDER</h4>
+                    <p class="text-xs text-amber-900 font-medium mt-1">Idol (>2.5), Fandom (>2.5)</p>
+                </div>
+            </div>
+
+            <!-- Detail View Box inside modal -->
+            <div id="modal-card-detail" class="bg-white border-2 border-[#4A1D0D] p-6 rounded-2xl">
+                <h3 id="modal-card-title" class="text-xl font-bold text-[#4A1D0D] mb-2">TOURIST</h3>
+                <p id="modal-card-desc" class="text-sm text-amber-900 mb-3">Click a card above to inspect details.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL FOR ABOUT US -->
+    <div id="about-modal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#FFFDF0] w-full max-w-lg rounded-3xl custom-border p-6 md:p-8 relative">
+            <div class="flex justify-between items-center mb-4 border-b-2 border-orange-200 pb-3">
+                <h2 id="modal-about-title" class="text-2xl font-black text-[#4A1D0D]">ABOUT US</h2>
+                <button onclick="closeAboutModal()" class="w-10 h-10 bg-red-100 hover:bg-red-200 rounded-xl font-bold custom-button flex items-center justify-center text-lg">X</button>
+            </div>
+            <div id="modal-about-content" class="text-sm text-amber-900 leading-relaxed font-medium space-y-3">
+                <p><strong>Mirror of Mindfulness</strong> is an interactive web application designed to help you discover your reflection and connection archetype within fandom culture.</p>
+                <p>Through our questionnaire evaluating your bond with both the media figure and the community, you can understand your unique role as a supporter!</p>
+                <div class="pt-2 border-t border-orange-200 text-xs">
+                    Contact & support email: <span class="font-bold text-orange-700">mirrorofmindfulness@gmail.com</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-xs text-[#4A1D0D] font-bold opacity-80 mt-6">
+        Mirror of Mindfulness © 2026
+    </footer>
+
+    <!-- JavaScript Quiz Logic, Multilingual Data & Modals -->
+    <script>
+        let currentLang = 'id';
+
+        const textContent = {
+            id: {
+                navCards: "Character Cards",
+                navAbout: "About Us",
+                subtitle: "Find out your reflection & connection archetype!",
+                startBtn: "START / TAKE QUIZ",
+                emailText: "Got a question? email us on: ",
+                prevBtn: "Kembali",
+                nextBtn: "Selanjutnya",
+                seeResult: "Lihat Hasil",
+                questionOf: "Question",
+                ofText: "of",
+                resultBadge: "QUIZ RESULT COMPLETED!",
+                resultHeading: "Your Reflection Archetype",
+                resultSub: "Here is your customized analysis based on your average quiz scores.",
+                idolScoreLbl: "Idol Score: ",
+                fandomScoreLbl: "Fandom Score: ",
+                retakeBtn: "Retake Quiz",
+                viewCardsBtn: "View Character Cards",
+                dirTitle: "CHARACTER ARCHETYPES DIRECTORY",
+                aboutTitle: "ABOUT US",
+                aboutBody1: "<strong>Mirror of Mindfulness</strong> is an interactive web application designed to help you discover your reflection and connection archetype within fandom culture.",
+                aboutBody2: "Through our questionnaire evaluating your bond with both the media figure and the community, you can understand your unique role as a supporter!",
+                aboutEmail: "Contact & support email: "
+            },
+            en: {
+                navCards: "Character Cards",
+                navAbout: "About Us",
+                subtitle: "Find out your reflection & connection archetype!",
+                startBtn: "START / TAKE QUIZ",
+                emailText: "Got a question? email us on: ",
+                prevBtn: "Back",
+                nextBtn: "Next",
+                seeResult: "View Result",
+                questionOf: "Question",
+                ofText: "of",
+                resultBadge: "QUIZ RESULT COMPLETED!",
+                resultHeading: "Your Reflection Archetype",
+                resultSub: "Here is your customized analysis based on your average quiz scores.",
+                idolScoreLbl: "Idol Score: ",
+                fandomScoreLbl: "Fandom Score: ",
+                retakeBtn: "Retake Quiz",
+                viewCardsBtn: "View Character Cards",
+                dirTitle: "CHARACTER ARCHETYPES DIRECTORY",
+                aboutTitle: "ABOUT US",
+                aboutBody1: "<strong>Mirror of Mindfulness</strong> is an interactive web application designed to help you discover your reflection and connection archetype within fandom culture.",
+                aboutBody2: "Through our questionnaire evaluating your bond with both the media figure and the community, you can understand your unique role as a supporter!",
+                aboutEmail: "Contact & support email: "
+            }
+        };
+
+        const questionsData = {
+            id: [
+                { id: 1, category: "Skor Idola", text: "Karena sering mencari tahu soal tokoh ini, algoritma media sosial saya banyak yang berisi konten tentangnya." },
+                { id: 2, category: "Skor Idola", text: "Mengecek update terbaru dari tokoh ini adalah salah satu hal yang otomatis saya lakukan tiap ada waktu luang." },
+                { id: 3, category: "Skor Idola", text: "Kalau tokoh ini merilis karya atau konten baru, aku biasanya langsung berusaha menyempatkan diri untuk melihat di hari yang sama." },
+                { id: 4, category: "Skor Idola", text: "Aku merasa senang ketika dapat mendukung tokoh ini (misalnya streaming berulang kali, atau membeli barang/karya yang berkaitan dengannya)." },
+                { id: 5, category: "Skor Idola", text: "Melihat kerja keras atau pencapaian tokoh ini sering memberiku motivasi ekstra untuk keseharianku." },
+                { id: 6, category: "Skor Fandom", text: "Aku sering membaca komentar, mengikuti obrolan, atau berinteraksi dengan sesama penggemar tokoh ini di media sosial." },
+                { id: 7, category: "Skor Fandom", text: "Berada di komunitas penggemar/fandom memberiku teman mengobrol yang seru dan membuat aku merasa cocok." },
+                { id: 8, category: "Skor Fandom", text: "Aku membuka akun fanbase/grup fans tidak hanya untuk mencari informasi tentang idola, tapi juga karena senang melihat interaksi sesamanya." },
+                { id: 9, category: "Skor Fandom", text: "Jika ada yang mengejek atau berkomentar negatif soal idolaku, aku secara sukarela akan langsung membela idolaku." },
+                { id: 10, category: "Skor Fandom", text: "Aku akan tetap mendukung idola saya dalam situasi apa pun, baik ketika ia benar maupun salah." }
+            ],
+            en: [
+                { id: 1, category: "Idol Score", text: "Because I frequently search for this figure, my social media algorithm is filled with content about them." },
+                { id: 2, category: "Idol Score", text: "Checking the latest updates about this figure is something I automatically do whenever I have free time." },
+                { id: 3, category: "Idol Score", text: "When this figure releases new work or content, I usually try my best to watch/check it on the same day." },
+                { id: 4, category: "Idol Score", text: "I feel happy when I can support this figure (e.g., streaming repeatedly, or purchasing related merchandise/art)." },
+                { id: 5, category: "Idol Score", text: "Seeing this figure's hard work or achievements often gives me extra motivation for my daily life." },
+                { id: 6, category: "Fandom Score", text: "I frequently read comments, join chats, or interact with fellow fans of this figure on social media." },
+                { id: 7, category: "Fandom Score", text: "Being in the fan community gives me exciting friends to talk to and makes me feel like I belong." },
+                { id: 8, category: "Fandom Score", text: "Visiting fan base accounts/groups isn't just for idol info, but also because I enjoy seeing how fans interact with each other." },
+                { id: 9, category: "Fandom Score", text: "If someone mocks or leaves negative comments about my idol, I will voluntarily defend them straight away." },
+                { id: 10, category: "Fandom Score", text: "I will continue supporting my idol under any circumstances, whether they are right or wrong." }
+            ]
+        };
+
+        const optionsData = {
+            id: [
+                { label: "Sangat Sesuai", points: 4 },
+                { label: "Sesuai", points: 3 },
+                { label: "Tidak Sesuai", points: 2 },
+                { label: "Sangat Tidak Sesuai", points: 1 }
+            ],
+            en: [
+                { label: "Strongly Agree", points: 4 },
+                { label: "Agree", points: 3 },
+                { label: "Disagree", points: 2 },
+                { label: "Strongly Disagree", points: 1 }
+            ]
+        };
+
+        const archetypesInfo = {
+            id: {
+                tourist: { 
+                    title: "TOURIST", 
+                    sub: "Score Range: Idol (<=2.5), Fandom (<=2.5)",
+                    desc: "<strong>What is a \"tourist\"?</strong><br>The casual passersby. They drop in out of fleeting curiosity, enjoying the space briefly without forming a deep attachment to the subject or the crowd.<br><br><strong>How do i know if i'm a tourist?</strong><br>• No/weak emotional connection to the media figure.<br>• No/weak interaction with the fan community.<br>• Consumes content briefly out of temporary curiosity." 
+                },
+                mingler: { 
+                    title: "MINGLER", 
+                    sub: "Score Range: Idol (<=2.5), Fandom (>2.5)",
+                    desc: "<strong>What is a \"mingler\"?</strong><br>The social butterflies. They are drawn to the welcoming group environment, staying for the warm interactions with fellow members rather than a strong tie to the central figure.<br><br><strong>How do i know if i'm a mingler?</strong><br>• Weak emotional connection to the media figure.<br>• Actively interacts in the fan community rather than the media figure.<br>• Joins for the social environment rather than the media figure." 
+                },
+                devotee: { 
+                    title: "DEVOTEE", 
+                    sub: "Score Range: Idol (>2.5), Fandom (<=2.5)",
+                    desc: "<strong>What is a \"devotee\"?</strong><br>The dedicated enthusiasts. They are highly attached to the central subject, interest, or media persona, but they prefer focusing on the content rather than socializing with other fans.<br><br><strong>How do i know if i'm a devotee?</strong><br>• Strong emotional connection to the media figure.<br>• Focuses primarily on the media figure rather than the fandom.<br>• Consumes media figure content heavily." 
+                },
+                insider: { 
+                    title: "INSIDER", 
+                    sub: "Score Range: Idol (>2.5), Fandom (>2.5)",
+                    desc: "<strong>What is a \"insider\"?</strong><br>The core community. They feel a deep, personal bond with the figure and actively build real friendships with other members of the group.<br><br><strong>How do i know if i'm a insider?</strong><br>• Strong emotional connection to the media figure.<br>• Actively interact with the fan community.<br>• Highly active in both content consumption and fandom activities." 
+                }
+            },
+            en: {
+                tourist: { 
+                    title: "TOURIST", 
+                    sub: "Score Range: Idol (<=2.5), Fandom (<=2.5)",
+                    desc: "<strong>What is a \"tourist\"?</strong><br>The casual passersby. They drop in out of fleeting curiosity, enjoying the space briefly without forming a deep attachment to the subject or the crowd.<br><br><strong>How do i know if i'm a tourist?</strong><br>• No/weak emotional connection to the media figure.<br>• No/weak interaction with the fan community.<br>• Consumes content briefly out of temporary curiosity." 
+                },
+                mingler: { 
+                    title: "MINGLER", 
+                    sub: "Score Range: Idol (<=2.5), Fandom (>2.5)",
+                    desc: "<strong>What is a \"mingler\"?</strong><br>The social butterflies. They are drawn to the welcoming group environment, staying for the warm interactions with fellow members rather than a strong tie to the central figure.<br><br><strong>How do i know if i'm a mingler?</strong><br>• Weak emotional connection to the media figure.<br>• Actively interacts in the fan community rather than the media figure.<br>• Joins for the social environment rather than the media figure." 
+                },
+                devotee: { 
+                    title: "DEVOTEE", 
+                    sub: "Score Range: Idol (>2.5), Fandom (<=2.5)",
+                    desc: "<strong>What is a \"devotee\"?</strong><br>The dedicated enthusiasts. They are highly attached to the central subject, interest, or media persona, but they prefer focusing on the content rather than socializing with other fans.<br><br><strong>How do i know if i'm a devotee?</strong><br>• Strong emotional connection to the media figure.<br>• Focuses primarily on the media figure rather than the fandom.<br>• Consumes media figure content heavily." 
+                },
+                insider: { 
+                    title: "INSIDER", 
+                    sub: "Score Range: Idol (>2.5), Fandom (>2.5)",
+                    desc: "<strong>What is a \"insider\"?</strong><br>The core community. They feel a deep, personal bond with the figure and actively build real friendships with other members of the group.<br><br><strong>How do i know if i'm a insider?</strong><br>• Strong emotional connection to the media figure.<br>• Actively interact with the fan community.<br>• Highly active in both content consumption and fandom activities." 
+                }
+            }
+        };
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {};
+        let lastResultArchetype = 'tourist';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            
+            if (lang === 'id') {
+                document.getElementById('lang-id-btn').className = "px-2 py-0.5 text-xs font-bold rounded bg-orange-400 text-white transition";
+                document.getElementById('lang-en-btn').className = "px-2 py-0.5 text-xs font-bold rounded bg-amber-100 text-[#4A1D0D] transition";
+            } else {
+                document.getElementById('lang-en-btn').className = "px-2 py-0.5 text-xs font-bold rounded bg-orange-400 text-white transition";
+                document.getElementById('lang-id-btn').className = "px-2 py-0.5 text-xs font-bold rounded bg-amber-100 text-[#4A1D0D] transition";
+            }
+
+            const t = textContent[lang];
+            document.getElementById('nav-cards-btn').innerText = t.navCards;
+            document.getElementById('nav-about-btn').innerText = t.navAbout;
+            document.getElementById('home-subtitle').innerText = t.subtitle;
+            document.getElementById('home-start-btn').innerText = t.startBtn;
+            document.getElementById('home-email-text').innerHTML = t.emailText + '<span class="underline text-orange-700">mirrorofmindfulness@gmail.com</span>';
+            document.getElementById('res-badge-text').innerText = t.resultBadge;
+            document.getElementById('res-heading').innerText = t.resultHeading;
+            document.getElementById('res-subheading').innerText = t.resultSub;
+            document.getElementById('res-retake-btn').innerText = t.retakeBtn;
+            document.getElementById('res-viewcards-btn').innerText = t.viewCardsBtn;
+            document.getElementById('modal-directory-title').innerText = t.dirTitle;
+            document.getElementById('modal-about-title').innerText = t.aboutTitle;
+            document.getElementById('modal-about-content').innerHTML = `<p>${t.aboutBody1}</p><p>${t.aboutBody2}</p><div class="pt-2 border-t border-orange-200 text-xs">${t.aboutEmail}<span class="font-bold text-orange-700">mirrorofmindfulness@gmail.com</span></div>`;
+
+            if (!document.getElementById('quiz-screen').classList.contains('hidden')) {
+                renderQuestion();
+            }
+            if (!document.getElementById('result-screen').classList.contains('hidden')) {
+                selectCardDetail(lastResultArchetype);
+            }
+        }
+
+        function goHome() {
+            document.getElementById('home-screen').classList.remove('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+        }
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const questions = questionsData[currentLang];
+            const options = optionsData[currentLang];
+            const t = textContent[currentLang];
+
+            const q = questions[currentQuestionIndex];
+            document.getElementById('question-category-badge').innerText = q.category;
+            document.getElementById('question-progress').innerText = `${t.questionOf} ${currentQuestionIndex + 1} ${t.ofText} ${questions.length}`;
+            document.getElementById('question-text').innerText = `${currentQuestionIndex + 1}. ${q.text}`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+
+            options.forEach(opt => {
+                const isSelected = userAnswers[currentQuestionIndex] === opt.points;
+                const btn = document.createElement('button');
+                btn.className = `w-full p-4 rounded-2xl font-bold text-left transition flex justify-between items-center custom-button ${isSelected ? 'bg-orange-300 border-[#4A1D0D]' : 'bg-white hover:bg-orange-50'}`;
+                btn.innerHTML = `<span>${opt.label}</span> <span class="text-xs px-2.5 py-1 bg-amber-100 border border-[#4A1D0D] rounded-lg">Poin: ${opt.points}</span>`;
+                btn.onclick = () => selectOption(opt.points);
+                container.appendChild(btn);
+            });
+
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('prev-btn').innerText = t.prevBtn;
+            updateNextButtonState();
+        }
+
+        function selectOption(points) {
+            userAnswers[currentQuestionIndex] = points;
+            renderQuestion();
+            
+            setTimeout(() => {
+                const questions = questionsData[currentLang];
+                if (currentQuestionIndex < questions.length - 1) {
+                    currentQuestionIndex++;
+                    renderQuestion();
+                } else {
+                    updateNextButtonState();
+                }
+            }, 200);
+        }
+
+        function updateNextButtonState() {
+            const questions = questionsData[currentLang];
+            const t = textContent[currentLang];
+            const nextBtn = document.getElementById('next-btn');
+            const hasAnswered = userAnswers[currentQuestionIndex] !== undefined;
+            nextBtn.disabled = !hasAnswered;
+            if (currentQuestionIndex === questions.length - 1) {
+                nextBtn.innerText = t.seeResult;
+            } else {
+                nextBtn.innerText = t.nextBtn;
+            }
+        }
+
+        function nextQuestion() {
+            const questions = questionsData[currentLang];
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                calculateResult();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function calculateResult() {
+            let idolTotal = 0;
+            for (let i = 0; i < 5; i++) {
+                idolTotal += (userAnswers[i] || 1);
+            }
+            let idolAvg = idolTotal / 5;
+
+            let fandomTotal = 0;
+            for (let i = 5; i < 10; i++) {
+                fandomTotal += (userAnswers[i] || 1);
+            }
+            let fandomAvg = fandomTotal / 5;
+
+            let archetypeKey = '';
+            let archetypeTitle = '';
+            let desc = '';
+            let bgClass = '';
+            let imgFile = 'tourist.png';
+
+            if (idolAvg <= 2.5 && fandomAvg <= 2.5) {
+                archetypeKey = 'tourist';
+                archetypeTitle = "TOURIST";
+                desc = "The casual passersby. They drop in out of fleeting curiosity, enjoying the space briefly without forming a deep attachment to the subject or the crowd.";
+                bgClass = "bg-slate-100";
+                imgFile = "tourist.png";
+            } else if (idolAvg <= 2.5 && fandomAvg > 2.5) {
+                archetypeKey = 'mingler';
+                archetypeTitle = "MINGLER";
+                desc = "The social butterflies. They are drawn to the welcoming group environment, staying for warm interactions with fellow members rather than a strong tie to the central figure.";
+                bgClass = "bg-orange-50";
+                imgFile = "mingler.png";
+            } else if (idolAvg > 2.5 && fandomAvg <= 2.5) {
+                archetypeKey = 'devotee';
+                archetypeTitle = "DEVOTEE";
+                desc = "The dedicated enthusiasts. They are highly attached to the central subject or media persona, preferring to focus on the content rather than socializing with other fans.";
+                bgClass = "bg-amber-50";
+                imgFile = "devotee.png";
+            } else {
+                archetypeKey = 'insider';
+                archetypeTitle = "INSIDER";
+                desc = "The core community. They feel a deep, personal bond with the figure and actively build real friendships with other members of the group.";
+                bgClass = "bg-yellow-50";
+                imgFile = "insider.png";
+            }
+
+            lastResultArchetype = archetypeKey;
+
+            document.getElementById('quiz-screen').classList.add('hidden');
+            const resScreen = document.getElementById('result-screen');
+            resScreen.classList.remove('hidden');
+
+            const t = textContent[currentLang];
+            document.getElementById('res-idol-score').innerText = idolAvg.toFixed(1);
+            document.getElementById('res-fandom-score').innerText = fandomAvg.toFixed(1);
+            document.getElementById('result-title').innerText = archetypeTitle;
+            document.getElementById('result-description').innerText = desc;
+            document.getElementById('result-img-tag').src = imgFile;
+            
+            const cardBox = document.getElementById('result-card-box');
+            cardBox.className = `${bgClass} border-4 border-[#4A1D0D] rounded-3xl p-6 md:p-8 mb-6 shadow-[4px_4px_0px_#4A1D0D] max-w-xl mx-auto`;
+        }
+
+        // Modals Functions
+        function showCardsModal() {
+            document.getElementById('cards-modal').classList.remove('hidden');
+            document.getElementById('cards-modal').classList.add('flex');
+            selectCardDetail('tourist');
+        }
+
+        function closeCardsModal() {
+            document.getElementById('cards-modal').classList.add('hidden');
+            document.getElementById('cards-modal').classList.remove('flex');
+        }
+
+        function showAboutModal() {
+            document.getElementById('about-modal').classList.remove('hidden');
+            document.getElementById('about-modal').classList.add('flex');
+        }
+
+        function closeAboutModal() {
+            document.getElementById('about-modal').classList.add('hidden');
+            document.getElementById('about-modal').classList.remove('flex');
+        }
+
+        function selectCardDetail(type) {
+            lastResultArchetype = type;
+            const details = archetypesInfo[currentLang][type];
+            document.getElementById('modal-card-title').innerText = details.title;
+            document.getElementById('modal-card-desc').innerHTML = `<strong>${details.sub}</strong><br><br>` + details.desc;
+        }
+    </script>
+</body>
+</html>
