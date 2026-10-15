@@ -55,8 +55,8 @@
         </div>
 
         <div class="flex gap-3">
-            <button onclick="showCardsModal()" id="nav-cards-btn" class="px-4 py-2 bg-amber-100 font-bold text-sm rounded-xl custom-button">Character Cards</button>
-            <button onclick="showAboutModal()" id="nav-about-btn" class="px-4 py-2 bg-orange-100 font-bold text-sm rounded-xl custom-button">About Us</button>
+            <button onclick="showCardsModal()" id="nav-cards-btn" class="px-4 py-2 bg-amber-100 font-bold text-sm rounded-xl custom-button">Kartu Karakter</button>
+            <button onclick="showAboutModal()" id="nav-about-btn" class="px-4 py-2 bg-orange-100 font-bold text-sm rounded-xl custom-button">Tentang Kami</button>
         </div>
     </header>
 
@@ -79,17 +79,17 @@
                 <h1 class="text-4xl md:text-6xl title-main text-[#4A1D0D] mb-3">
                     MIRROR OF <span class="block text-orange-600 mt-1">MINDFULNESS</span>
                 </h1>
-                <p id="home-subtitle" class="text-base md:text-lg font-bold text-amber-900 mb-6 opacity-90">Find out your reflection & connection archetype!</p>
+                <p id="home-subtitle" class="text-base md:text-lg font-bold text-amber-900 mb-6 opacity-90">Temukan refleksi & arketipe hubunganmu!</p>
                 
                 <div class="flex flex-col gap-4 mb-6">
                     <button onclick="startQuiz()" id="home-start-btn" class="w-full py-4 bg-orange-400 hover:bg-orange-500 text-white font-extrabold text-xl rounded-2xl custom-button flex items-center justify-center gap-2">
-                        START / TAKE QUIZ
+                        MULAI KUIS
                     </button>
                 </div>
 
                 <!-- Email Box -->
                 <div id="home-email-text" class="pt-4 border-t-2 border-orange-200 text-xs font-bold text-amber-900">
-                    Got a question? email us on: <span class="underline text-orange-700">mirrorofmindfulness@gmail.com</span>
+                    Ada pertanyaan? email kami di: <span class="underline text-orange-700">mirrorofmindfulness@gmail.com</span>
                 </div>
             </div>
         </div>
@@ -99,7 +99,7 @@
             <!-- Quiz Progress Header -->
             <div class="flex justify-between items-center mb-6">
                 <span id="question-category-badge" class="px-3 py-1 bg-orange-200 text-orange-900 font-bold text-xs rounded-full uppercase tracking-wider custom-button">Skor Idola</span>
-                <span id="question-progress" class="font-bold text-sm text-amber-900">Question 1 of 10</span>
+                <span id="question-progress" class="font-bold text-sm text-amber-900">Pertanyaan 1 dari 10</span>
             </div>
 
             <!-- Question Card -->
@@ -108,7 +108,7 @@
                     Loading question...
                 </h2>
 
-                <!-- Options List (Likert Scale) -->
+                <!-- Options List -->
                 <div id="options-container" class="flex flex-col gap-3">
                     <!-- Populated dynamically via JS -->
                 </div>
@@ -117,19 +117,19 @@
             <!-- Navigation Buttons -->
             <div class="flex justify-between items-center pt-4 border-t-2 border-orange-100">
                 <button id="prev-btn" onclick="prevQuestion()" class="px-6 py-2.5 bg-amber-100 font-bold rounded-xl custom-button text-sm disabled:opacity-40 disabled:cursor-not-allowed">
-                    Back
+                    Kembali
                 </button>
                 <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2.5 bg-orange-400 text-white font-bold rounded-xl custom-button text-sm disabled:opacity-40 disabled:cursor-not-allowed">
-                    Next
+                    Selanjutnya
                 </button>
             </div>
         </div>
 
         <!-- VIEW 3: RESULT SCREEN -->
         <div id="result-screen" class="hidden w-full bg-[#FFFDF0] p-6 md:p-10 rounded-3xl custom-border text-center">
-            <div id="res-badge-text" class="inline-block px-4 py-1.5 bg-orange-200 font-bold text-xs rounded-full mb-4 custom-button">QUIZ RESULT COMPLETED!</div>
-            <h2 id="res-heading" class="text-3xl font-extrabold text-[#4A1D0D] mb-2">Your Reflection Archetype</h2>
-            <p id="res-subheading" class="text-sm text-amber-900 mb-6">Here is your customized analysis based on your average quiz scores.</p>
+            <div id="res-badge-text" class="inline-block px-4 py-1.5 bg-orange-200 font-bold text-xs rounded-full mb-4 custom-button">KUIS SELESAI!</div>
+            <h2 id="res-heading" class="text-3xl font-extrabold text-[#4A1D0D] mb-2">Arketipe Refleksimu</h2>
+            <p id="res-subheading" class="text-sm text-amber-900 mb-6">Berikut adalah hasil analisis berdasarkan nilai rata-rata kuismu.</p>
 
             <!-- Result Card Container -->
             <div id="result-card-box" class="bg-blue-50 border-4 border-[#4A1D0D] rounded-3xl p-6 md:p-8 mb-6 shadow-[4px_4px_0px_#4A1D0D] max-w-xl mx-auto">
@@ -140,8 +140,8 @@
                 
                 <!-- Score Breakdown -->
                 <div class="flex justify-center gap-4 mb-4 font-bold text-sm">
-                    <span id="res-idol-label" class="px-3 py-1 bg-white border-2 border-[#4A1D0D] rounded-xl">Idol Score: <span id="res-idol-score">0.0</span></span>
-                    <span id="res-fandom-label" class="px-3 py-1 bg-white border-2 border-[#4A1D0D] rounded-xl">Fandom Score: <span id="res-fandom-score">0.0</span></span>
+                    <span id="res-idol-label" class="px-3 py-1 bg-white border-2 border-[#4A1D0D] rounded-xl"><span id="res-idol-text">Skor Idola</span>: <span id="res-idol-score">0.0</span></span>
+                    <span id="res-fandom-label" class="px-3 py-1 bg-white border-2 border-[#4A1D0D] rounded-xl"><span id="res-fandom-text">Skor Fandom</span>: <span id="res-fandom-score">0.0</span></span>
                 </div>
 
                 <p id="result-description" class="text-base text-amber-900 leading-relaxed font-medium">
@@ -150,8 +150,8 @@
             </div>
 
             <div class="flex justify-center gap-4">
-                <button onclick="startQuiz()" id="res-retake-btn" class="px-6 py-3 bg-amber-100 font-bold rounded-2xl custom-button">Retake Quiz</button>
-                <button onclick="showCardsModal()" id="res-viewcards-btn" class="px-6 py-3 bg-orange-400 text-white font-bold rounded-2xl custom-button">View Character Cards</button>
+                <button onclick="startQuiz()" id="res-retake-btn" class="px-6 py-3 bg-amber-100 font-bold rounded-2xl custom-button">Ulangi Kuis</button>
+                <button onclick="showCardsModal()" id="res-viewcards-btn" class="px-6 py-3 bg-orange-400 text-white font-bold rounded-2xl custom-button">Lihat Kartu Karakter</button>
             </div>
         </div>
 
@@ -161,7 +161,7 @@
     <div id="cards-modal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
         <div class="bg-[#FFFDF0] w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-3xl custom-border p-6 md:p-8 relative">
             <div class="flex justify-between items-center mb-6 border-b-2 border-orange-200 pb-4">
-                <h2 id="modal-directory-title" class="text-2xl font-black text-[#4A1D0D]">CHARACTER ARCHETYPES DIRECTORY</h2>
+                <h2 id="modal-directory-title" class="text-2xl font-black text-[#4A1D0D]">DIREKTORI ARKETIPE KARAKTER</h2>
                 <button onclick="closeCardsModal()" class="w-10 h-10 bg-red-100 hover:bg-red-200 rounded-xl font-bold custom-button flex items-center justify-center text-lg">X</button>
             </div>
 
@@ -208,7 +208,7 @@
             <!-- Detail View Box inside modal -->
             <div id="modal-card-detail" class="bg-white border-2 border-[#4A1D0D] p-6 rounded-2xl">
                 <h3 id="modal-card-title" class="text-xl font-bold text-[#4A1D0D] mb-2">TOURIST</h3>
-                <p id="modal-card-desc" class="text-sm text-amber-900 mb-3">Click a card above to inspect details.</p>
+                <p id="modal-card-desc" class="text-sm text-amber-900 mb-3">Klik salah satu kartu di atas untuk melihat detailnya.</p>
             </div>
         </div>
     </div>
@@ -217,14 +217,14 @@
     <div id="about-modal" class="fixed inset-0 bg-black/50 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
         <div class="bg-[#FFFDF0] w-full max-w-lg rounded-3xl custom-border p-6 md:p-8 relative">
             <div class="flex justify-between items-center mb-4 border-b-2 border-orange-200 pb-3">
-                <h2 id="modal-about-title" class="text-2xl font-black text-[#4A1D0D]">ABOUT US</h2>
+                <h2 id="modal-about-title" class="text-2xl font-black text-[#4A1D0D]">TENTANG KAMI</h2>
                 <button onclick="closeAboutModal()" class="w-10 h-10 bg-red-100 hover:bg-red-200 rounded-xl font-bold custom-button flex items-center justify-center text-lg">X</button>
             </div>
             <div id="modal-about-content" class="text-sm text-amber-900 leading-relaxed font-medium space-y-3">
-                <p><strong>Mirror of Mindfulness</strong> is an interactive web application designed to help you discover your reflection and connection archetype within fandom culture.</p>
-                <p>Through our questionnaire evaluating your bond with both the media figure and the community, you can understand your unique role as a supporter!</p>
+                <p><strong>Mirror of Mindfulness</strong> adalah aplikasi web interaktif yang dirancang untuk membantumu menemukan arketipe refleksi dan hubunganmu dalam budaya fandom.</p>
+                <p>Melalui kuesioner yang mengevaluasi ikatanmu dengan tokoh media maupun komunitas, kamu dapat memahami peran unikmu sebagai seorang pendukung!</p>
                 <div class="pt-2 border-t border-orange-200 text-xs">
-                    Contact & support email: <span class="font-bold text-orange-700">mirrorofmindfulness@gmail.com</span>
+                    Email kontak & bantuan: <span class="font-bold text-orange-700">mirrorofmindfulness@gmail.com</span>
                 </div>
             </div>
         </div>
@@ -241,28 +241,28 @@
 
         const textContent = {
             id: {
-                navCards: "Character Cards",
-                navAbout: "About Us",
-                subtitle: "Find out your reflection & connection archetype!",
-                startBtn: "START / TAKE QUIZ",
-                emailText: "Got a question? email us on: ",
+                navCards: "Kartu Karakter",
+                navAbout: "Tentang Kami",
+                subtitle: "Temukan refleksi & arketipe hubunganmu!",
+                startBtn: "MULAI KUIS",
+                emailText: "Ada pertanyaan? email kami di: ",
                 prevBtn: "Kembali",
                 nextBtn: "Selanjutnya",
                 seeResult: "Lihat Hasil",
-                questionOf: "Question",
-                ofText: "of",
-                resultBadge: "QUIZ RESULT COMPLETED!",
-                resultHeading: "Your Reflection Archetype",
-                resultSub: "Here is your customized analysis based on your average quiz scores.",
-                idolScoreLbl: "Idol Score: ",
-                fandomScoreLbl: "Fandom Score: ",
-                retakeBtn: "Retake Quiz",
-                viewCardsBtn: "View Character Cards",
-                dirTitle: "CHARACTER ARCHETYPES DIRECTORY",
-                aboutTitle: "ABOUT US",
-                aboutBody1: "<strong>Mirror of Mindfulness</strong> is an interactive web application designed to help you discover your reflection and connection archetype within fandom culture.",
-                aboutBody2: "Through our questionnaire evaluating your bond with both the media figure and the community, you can understand your unique role as a supporter!",
-                aboutEmail: "Contact & support email: "
+                questionOf: "Pertanyaan",
+                ofText: "dari",
+                resultBadge: "KUIS SELESAI!",
+                resultHeading: "Arketipe Refleksimu",
+                resultSub: "Berikut adalah hasil analisis berdasarkan nilai rata-rata kuismu.",
+                idolScoreLbl: "Skor Idola",
+                fandomScoreLbl: "Skor Fandom",
+                retakeBtn: "Ulangi Kuis",
+                viewCardsBtn: "Lihat Kartu Karakter",
+                dirTitle: "DIREKTORI ARKETIPE KARAKTER",
+                aboutTitle: "TENTANG KAMI",
+                aboutBody1: "<strong>Mirror of Mindfulness</strong> adalah aplikasi web interaktif yang dirancang untuk membantumu menemukan arketipe refleksi dan hubunganmu dalam budaya fandom.",
+                aboutBody2: "Melalui kuesioner yang mengevaluasi ikatanmu dengan tokoh media maupun komunitas, kamu dapat memahami peran unikmu sebagai seorang pendukung!",
+                aboutEmail: "Email kontak & bantuan: "
             },
             en: {
                 navCards: "Character Cards",
@@ -278,8 +278,8 @@
                 resultBadge: "QUIZ RESULT COMPLETED!",
                 resultHeading: "Your Reflection Archetype",
                 resultSub: "Here is your customized analysis based on your average quiz scores.",
-                idolScoreLbl: "Idol Score: ",
-                fandomScoreLbl: "Fandom Score: ",
+                idolScoreLbl: "Idol Score",
+                fandomScoreLbl: "Fandom Score",
                 retakeBtn: "Retake Quiz",
                 viewCardsBtn: "View Character Cards",
                 dirTitle: "CHARACTER ARCHETYPES DIRECTORY",
@@ -336,23 +336,23 @@
             id: {
                 tourist: { 
                     title: "TOURIST", 
-                    sub: "Score Range: Idol (<=2.5), Fandom (<=2.5)",
-                    desc: "<strong>What is a \"tourist\"?</strong><br>The casual passersby. They drop in out of fleeting curiosity, enjoying the space briefly without forming a deep attachment to the subject or the crowd.<br><br><strong>How do i know if i'm a tourist?</strong><br>• No/weak emotional connection to the media figure.<br>• No/weak interaction with the fan community.<br>• Consumes content briefly out of temporary curiosity." 
+                    sub: "Rentang Skor: Idola (<=2.5), Fandom (<=2.5)",
+                    desc: "<strong>Apa itu \"tourist\"?</strong><br>Pengunjung kasual. Mereka datang karena rasa penasaran sesaat, menikmati ruang tersebut sebentar tanpa membentuk keterikatan mendalam pada subjek atau kerumunan.<br><br><strong>Bagaimana saya tahu jika saya seorang tourist?</strong><br>• Tidak ada / lemah ikatan emosional dengan tokoh media.<br>• Tidak ada / lemah interaksi dengan komunitas penggemar.<br>• Mengonsumsi konten sebentar karena penasaran sementara." 
                 },
                 mingler: { 
                     title: "MINGLER", 
-                    sub: "Score Range: Idol (<=2.5), Fandom (>2.5)",
-                    desc: "<strong>What is a \"mingler\"?</strong><br>The social butterflies. They are drawn to the welcoming group environment, staying for the warm interactions with fellow members rather than a strong tie to the central figure.<br><br><strong>How do i know if i'm a mingler?</strong><br>• Weak emotional connection to the media figure.<br>• Actively interacts in the fan community rather than the media figure.<br>• Joins for the social environment rather than the media figure." 
+                    sub: "Rentang Skor: Idola (<=2.5), Fandom (>2.5)",
+                    desc: "<strong>Apa itu \"mingler\"?</strong><br>Kupu-kupu sosial. Mereka tertarik pada lingkungan kelompok yang ramah, bertahan demi interaksi hangat dengan sesama anggota daripada ikatan kuat dengan tokoh utama.<br><br><strong>Bagaimana saya tahu jika saya seorang mingler?</strong><br>• Lemah ikatan emosional dengan tokoh media.<br>• Aktif berinteraksi di komunitas penggemar daripada dengan tokoh media.<br>• Bergabung demi lingkungan sosial daripada tokoh media." 
                 },
                 devotee: { 
                     title: "DEVOTEE", 
-                    sub: "Score Range: Idol (>2.5), Fandom (<=2.5)",
-                    desc: "<strong>What is a \"devotee\"?</strong><br>The dedicated enthusiasts. They are highly attached to the central subject, interest, or media persona, but they prefer focusing on the content rather than socializing with other fans.<br><br><strong>How do i know if i'm a devotee?</strong><br>• Strong emotional connection to the media figure.<br>• Focuses primarily on the media figure rather than the fandom.<br>• Consumes media figure content heavily." 
+                    sub: "Rentang Skor: Idola (>2.5), Fandom (<=2.5)",
+                    desc: "<strong>Apa itu \"devotee\"?</strong><br>Penggemar berdedikasi. Mereka sangat terikat pada subjek utama, minat, atau persona media, tetapi lebih memilih berfokus pada konten daripada bersosialisasi dengan penggemar lain.<br><br><strong>Bagaimana saya tahu jika saya seorang devotee?</strong><br>• Kuat ikatan emosional dengan tokoh media.<br>• Berfokus terutama pada tokoh media daripada fandom.<br>• Sangat banyak mengonsumsi konten tokoh media." 
                 },
                 insider: { 
                     title: "INSIDER", 
-                    sub: "Score Range: Idol (>2.5), Fandom (>2.5)",
-                    desc: "<strong>What is a \"insider\"?</strong><br>The core community. They feel a deep, personal bond with the figure and actively build real friendships with other members of the group.<br><br><strong>How do i know if i'm a insider?</strong><br>• Strong emotional connection to the media figure.<br>• Actively interact with the fan community.<br>• Highly active in both content consumption and fandom activities." 
+                    sub: "Rentang Skor: Idola (>2.5), Fandom (>2.5)",
+                    desc: "<strong>Apa itu \"insider\"?</strong><br>Komunitas inti. Mereka merasakan ikatan pribadi yang mendalam dengan sang tokoh dan secara aktif membangun persahabatan nyata dengan sesama anggota kelompok.<br><br><strong>Bagaimana saya tahu jika saya seorang insider?</strong><br>• Kuat ikatan emosional dengan tokoh media.<br>• Aktif berinteraksi dengan komunitas penggemar.<br>• Sangat aktif dalam konsumsi konten maupun aktivitas fandom." 
                 }
             },
             en: {
@@ -376,6 +376,21 @@
                     sub: "Score Range: Idol (>2.5), Fandom (>2.5)",
                     desc: "<strong>What is a \"insider\"?</strong><br>The core community. They feel a deep, personal bond with the figure and actively build real friendships with other members of the group.<br><br><strong>How do i know if i'm a insider?</strong><br>• Strong emotional connection to the media figure.<br>• Actively interact with the fan community.<br>• Highly active in both content consumption and fandom activities." 
                 }
+            }
+        };
+
+        const resultDescriptions = {
+            id: {
+                tourist: "Pengunjung kasual. Mereka datang karena rasa penasaran sesaat, menikmati ruang tersebut sebentar tanpa membentuk keterikatan mendalam pada subjek atau kerumunan.",
+                mingler: "Kupu-kupu sosial. Mereka tertarik pada lingkungan kelompok yang ramah, bertahan demi interaksi hangat dengan sesama anggota daripada ikatan kuat dengan tokoh utama.",
+                devotee: "Penggemar berdedikasi. Mereka sangat terikat pada subjek utama atau persona media, tetapi lebih memilih berfokus pada konten daripada bersosialisasi dengan penggemar lain.",
+                insider: "Komunitas inti. Mereka merasakan ikatan pribadi yang mendalam dengan sang tokoh dan secara aktif membangun persahabatan nyata dengan sesama anggota kelompok."
+            },
+            en: {
+                tourist: "The casual passersby. They drop in out of fleeting curiosity, enjoying the space briefly without forming a deep attachment to the subject or the crowd.",
+                mingler: "The social butterflies. They are drawn to the welcoming group environment, staying for the warm interactions with fellow members rather than a strong tie to the central figure.",
+                devotee: "The dedicated enthusiasts. They are highly attached to the central subject, interest, or media persona, but they prefer focusing on the content rather than socializing with other fans.",
+                insider: "The core community. They feel a deep, personal bond with the figure and actively build real friendships with other members of the group."
             }
         };
 
@@ -408,12 +423,15 @@
             document.getElementById('modal-directory-title').innerText = t.dirTitle;
             document.getElementById('modal-about-title').innerText = t.aboutTitle;
             document.getElementById('modal-about-content').innerHTML = `<p>${t.aboutBody1}</p><p>${t.aboutBody2}</p><div class="pt-2 border-t border-orange-200 text-xs">${t.aboutEmail}<span class="font-bold text-orange-700">mirrorofmindfulness@gmail.com</span></div>`;
+            document.getElementById('res-idol-text').innerText = t.idolScoreLbl;
+            document.getElementById('res-fandom-text').innerText = t.fandomScoreLbl;
 
             if (!document.getElementById('quiz-screen').classList.contains('hidden')) {
                 renderQuestion();
             }
             if (!document.getElementById('result-screen').classList.contains('hidden')) {
                 selectCardDetail(lastResultArchetype);
+                document.getElementById('result-description').innerText = resultDescriptions[currentLang][lastResultArchetype];
             }
         }
 
@@ -449,7 +467,7 @@
                 const isSelected = userAnswers[currentQuestionIndex] === opt.points;
                 const btn = document.createElement('button');
                 btn.className = `w-full p-4 rounded-2xl font-bold text-left transition flex justify-between items-center custom-button ${isSelected ? 'bg-orange-300 border-[#4A1D0D]' : 'bg-white hover:bg-orange-50'}`;
-                btn.innerHTML = `<span>${opt.label}</span> <span class="text-xs px-2.5 py-1 bg-amber-100 border border-[#4A1D0D] rounded-lg">Poin: ${opt.points}</span>`;
+                btn.innerHTML = `<span>${opt.label}</span>`;
                 btn.onclick = () => selectOption(opt.points);
                 container.appendChild(btn);
             });
@@ -519,32 +537,27 @@
 
             let archetypeKey = '';
             let archetypeTitle = '';
-            let desc = '';
             let bgClass = '';
             let imgFile = 'tourist.png';
 
             if (idolAvg <= 2.5 && fandomAvg <= 2.5) {
                 archetypeKey = 'tourist';
                 archetypeTitle = "TOURIST";
-                desc = "The casual passersby. They drop in out of fleeting curiosity, enjoying the space briefly without forming a deep attachment to the subject or the crowd.";
                 bgClass = "bg-slate-100";
                 imgFile = "tourist.png";
             } else if (idolAvg <= 2.5 && fandomAvg > 2.5) {
                 archetypeKey = 'mingler';
                 archetypeTitle = "MINGLER";
-                desc = "The social butterflies. They are drawn to the welcoming group environment, staying for warm interactions with fellow members rather than a strong tie to the central figure.";
                 bgClass = "bg-orange-50";
                 imgFile = "mingler.png";
             } else if (idolAvg > 2.5 && fandomAvg <= 2.5) {
                 archetypeKey = 'devotee';
                 archetypeTitle = "DEVOTEE";
-                desc = "The dedicated enthusiasts. They are highly attached to the central subject or media persona, preferring to focus on the content rather than socializing with other fans.";
                 bgClass = "bg-amber-50";
                 imgFile = "devotee.png";
             } else {
                 archetypeKey = 'insider';
                 archetypeTitle = "INSIDER";
-                desc = "The core community. They feel a deep, personal bond with the figure and actively build real friendships with other members of the group.";
                 bgClass = "bg-yellow-50";
                 imgFile = "insider.png";
             }
@@ -556,10 +569,18 @@
             resScreen.classList.remove('hidden');
 
             const t = textContent[currentLang];
+            document.getElementById('res-badge-text').innerText = t.resultBadge;
+            document.getElementById('res-heading').innerText = t.resultHeading;
+            document.getElementById('res-subheading').innerText = t.resultSub;
+            document.getElementById('res-retake-btn').innerText = t.retakeBtn;
+            document.getElementById('res-viewcards-btn').innerText = t.viewCardsBtn;
+            document.getElementById('res-idol-text').innerText = t.idolScoreLbl;
+            document.getElementById('res-fandom-text').innerText = t.fandomScoreLbl;
+
             document.getElementById('res-idol-score').innerText = idolAvg.toFixed(1);
             document.getElementById('res-fandom-score').innerText = fandomAvg.toFixed(1);
             document.getElementById('result-title').innerText = archetypeTitle;
-            document.getElementById('result-description').innerText = desc;
+            document.getElementById('result-description').innerText = resultDescriptions[currentLang][archetypeKey];
             document.getElementById('result-img-tag').src = imgFile;
             
             const cardBox = document.getElementById('result-card-box');
